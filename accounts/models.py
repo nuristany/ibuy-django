@@ -28,7 +28,7 @@ class MyAccountManager(BaseUserManager):
             username = username,
             first_name = first_name,
             last_name = last_name,
-            password=password
+            password=password,
             
             
             
@@ -50,8 +50,8 @@ class Account(AbstractBaseUser):
     email = models.EmailField(max_length=50, unique=True)
     phone_number = models.CharField(max_length=50)
     
-    date_joined = models.DateField(auto_now_add=True)
-    last_login = models.DateField(auto_now_add=True)
+    date_joined = models.DateTimeField(auto_now_add=True)
+    last_login = models.DateTimeField(auto_now_add=True)
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
