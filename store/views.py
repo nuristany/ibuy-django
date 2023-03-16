@@ -13,7 +13,7 @@ from django.core.paginator import EmptyPage,  PageNotAnInteger, Paginator
 # Create your views here.
 
 
-@login_required    
+   
 def store(request, catagory_slug=None):
     catagories = None
     products = None
