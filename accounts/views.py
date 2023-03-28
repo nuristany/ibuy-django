@@ -34,18 +34,7 @@ def register(request):
             user.phone_number = phone_number
             user.save()
 
-    # if request.method == 'POST':
-    #     form = RegisterationForm(request.POST)
-    #     if form.is_valid():
-    #         first_name = form.cleaned_data['first_name']
-    #         last_name = form.cleaned_data['last_name']
-    #         email = form.cleaned_data['email']
-    #         phone_number = form.cleaned_data['phone_number']
-    #         password = form.cleaned_data['password']
-    #         username = email.split("@")[0]
-    #         user = Account.objects.create_user(first_name=first_name,last_name=last_name,email=email,username = username,password=password)
-    #         user.phone_number = phone_number
-    #         user.save()
+
             current_site = get_current_site(request)
             mail_subject = 'Please activate your account'
             message = render_to_string('accounts/account_verification_email.html', {
@@ -60,22 +49,6 @@ def register(request):
             messages.success(request, 'Registration successfull')
             return redirect('accounts:register')
     
-    
-            
-            # current_site = get_current_site(request)
-            # mail_subject = 'Please activate your account'
-            # message = render_to_string('accounts/account_verification_email.html', {
-            #     'user': user,
-            #     'domain': current_site,
-            #     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-            #     'token': default_token_generator.make_token(user),
-            # }),
-            # to_email = to_email = form.cleaned_data.get('email') # use this line
-            # send_email =  EmailMessage(mail_subject, message, to=[to_email])
-            # send_email.send()
-           
-            
-            
     else:
         form = RegisterationForm()
         
@@ -83,6 +56,12 @@ def register(request):
         'form':form
     }
     return render(request, 'accounts/register.html', context)
+    
+            
+        
+           
+            
+            
             
            
         
@@ -142,14 +121,13 @@ def login(request):
             messages.success(request, 'You are logged out successfully')
             url = request.META.get('Http_REFERER')
             try:
+           
                 query = requests.utils.urlparse(url).query
-                # print("query -> ", query)
                 params = dict(x.split('=') for x in query.split('&'))
                 if 'next' in params:
                     nextPage = params['next']
                     return redirect(nextPage)
-                
-                # print("params -> ", params)
+
             
             except:
                 return redirect('accounts:dashboard')
