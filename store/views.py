@@ -7,7 +7,7 @@ from django.contrib import messages
 from orders.admin import OrderProductInline
 from orders.models import OrderProduct
 from .forms import ReviewForm
-from.models import ReviewRating
+from.models import ReviewRating, ProductGallery
 from carts.models import CartItem
 from carts.views import _cart_id
 from .models import Product, Catagory
@@ -66,6 +66,7 @@ def product_detail(request, catagory_slug, product_slug ):
         
        # Get the reviews
     reviews = ReviewRating.objects.filter(product_id=single_product.id, status=True)
+    product_gallery = ProductGallery.objects.filter(product_id=single_product.id)
 
    
 
@@ -75,6 +76,7 @@ def product_detail(request, catagory_slug, product_slug ):
         'in_cart':in_cart,
         'orderproduct':orderproduct,
         'reviews': reviews,
+        'product_gallery': product_gallery
        
     }
 

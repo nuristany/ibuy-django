@@ -67,7 +67,7 @@ class Account(AbstractBaseUser):
         return f"{self.first_name} {self.last_name} "
     
     def __str__(self):
-        return self.email
+        return f"{self.email} {self.phone_number}"
     
     def has_perm(self, perm, obj=None):
         return self.is_admin
@@ -76,7 +76,23 @@ class Account(AbstractBaseUser):
     def has_module_perms(self, add_label):
         return True
         
-        
+class UserProfile(models.Model):
+    user = models.OneToOneField(Account, on_delete=models.CASCADE)
+    address_line_1 = models.CharField(max_length=100, blank=True)
+    address_line_2 = models.CharField(max_length=100, blank=True)
+    city = models.CharField(max_length=50, blank=True)
+    state = models.CharField(max_length=50, blank=True)
+    country = models.CharField(max_length=50, blank=True)
+    profile_picture = models.ImageField(blank=True, upload_to='userprofile/')
+    
+    
+    def __str__(self):
+        return self.user.first_name
+    
+    
+    def full_add(self):
+        return self.address_line_1, self.address_line_2
+    
         
         
         

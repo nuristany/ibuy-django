@@ -11,24 +11,32 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 import os
-# from decouple import config
+
 from pathlib import Path
+from decouple import config
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+import environ
+env = environ.Env()
+environ.Env.read_env()
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-7-7+)s$q0uww*%zx*yp035q^969*jl)5@m%^tq!wi+2y+s7-&z'
+SECRET_KEY = config ('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = []
+
+
+DEBUG = config('DEBUG', default=True, cast=bool)
+
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -85,17 +93,21 @@ AUTH_USER_MODEL = 'accounts.Account'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'issa',
-        'HOST': 'localhost',
-        'USER': 'root',
-        'PASSWORD': 'root'
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'issa',
+#         'HOST': 'localhost',
+#         'USER': 'root',
+#         'PASSWORD': 'root'
         
-    }
-}
+#     }
+# }
 
+import dj_database_url
+DATABASES = {
+    'default' : dj_database_url.parse(env('DATABASE_URL'))
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -154,8 +166,23 @@ MESSAGE_TAGS = {
 
 
 # SMTP configuration
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'Zhakyadummy@gmail.com'
-EMAIL_HOST_PASSWORD = 'eslxlpmbfbucvdma'
-EMAIL_USE_TLS = True
+# EMAIL_HOST = config('EMAIL_HOST')
+# EMAIL_PORT = config('EMAIL_PORT', cast=int)
+# EMAIL_HOST_USER = config('EMAIL_HOST_USER ')
+# EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+# EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
+
+from decouple import UndefinedValueError
+
+try:
+    # Code that relies on the configuration variables
+    EMAIL_HOST = config('EMAIL_HOST')
+    EMAIL_PORT = config('EMAIL_PORT', cast=int)
+    EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+    EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
+
+    # Additional code here
+except UndefinedValueError as e:
+    print(f"Error: {e}")
+    # Handle the error case

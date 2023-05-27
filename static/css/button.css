@@ -1,0 +1,9 @@
+.all-product {
+  font-weight: bold;
+}
+.A-tag {
+  font-weight: bold;
+}
+.A-tag:hover {
+  text-decoration: underline;
+}

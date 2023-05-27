@@ -1168,10 +1168,9 @@ a[class*="card"]:hover .title {
 }
 .rating-stars i {
   font-size: 14px;
-  color: #d5d539;
+  color: #1fa43e;
   display: inline;
 }
-
 .rating-stars img {
   height: 14px;
   max-width: none;
@@ -1189,8 +1188,9 @@ a[class*="card"]:hover .title {
   left: 0;
   overflow: hidden;
 }
+
 .rating-stars li.stars-active i {
-  color: rgb(240, 199, 123);
+  color: orange;
 }
 .rating-stars.stars-lg img {
   height: 20px;
