@@ -34,7 +34,8 @@ SECRET_KEY = config ('SECRET_KEY')
 
 
 
-DEBUG = config('DEBUG', default=True, cast=bool)
+# DEBUG = config('DEBUG', default=True, cast=bool)
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
